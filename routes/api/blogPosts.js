@@ -1,9 +1,12 @@
 const express = require("express");
 const router = express.Router();
+// const multer = require("multer");
 
 const BlogPost = require("../../models/blogPost");
+// let upload = multer({ storage, fileFilter });
 
-router.get(("/test", (req, res) => res.send("Test route is working")));
+const url = "https://mern-cms-backend.adaptable.app/";
+router.get((url + "/test", (req, res) => res.send("Test route is working")));
 
 router.get("/", (req, res) => {
   BlogPost.find()
