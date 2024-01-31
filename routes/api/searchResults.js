@@ -22,6 +22,14 @@ router.get("/:id", (req, res) => {
     .catch((err) => res.status(404).json({ nobookfound: "No Post found" }));
 });
 
+router.post("/", (req, res) => {
+    searchResults.create(req.body)
+      .then((book) => res.json({ msg: "Post posted successfully" }))
+      .catch((err) =>
+        res.status(400).json({ error: "Unable to post this post" })
+      );
+  });
+
 // @route GET api/books
 // @description add/save book
 // @access Public
