@@ -17,7 +17,7 @@ app.use(express.json({ extended: false }));
 const books = require("./routes/api/books");
 const posts = require("./routes/api/blogPosts");
 const menuItems = require("./routes/api/menuItems");
-const searchResults = require("./models/searchResults");
+const searchResults = require("./routes/api/searchResults");
 
 // Connect Database
 const connectDB = async () => {

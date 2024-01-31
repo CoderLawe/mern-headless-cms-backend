@@ -15,7 +15,7 @@ const SearchResultsSchema = new mongoose.Schema({
   },
   location:{
     type:Number,
-    required:true
+    required:false
   },
   star:{
     type:Number,
