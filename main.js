@@ -17,6 +17,7 @@ app.use(express.json({ extended: false }));
 const books = require("./routes/api/books");
 const posts = require("./routes/api/blogPosts");
 const menuItems = require("./routes/api/menuItems");
+const searchResults = require("./models/searchResults");
 
 // Connect Database
 const connectDB = async () => {
@@ -41,6 +42,8 @@ app.get("/", (req, res) => res.send("Hello world!"));
 app.use("/api/books", books);
 app.use("/api/posts", posts);
 app.use("/api/items", menuItems);
+app.use("/api/searchResults", searchResults);
+
 const port = process.env.PORT || 8082;
 
 app.listen(port, () => console.log(`Server running on port ${port}`));
