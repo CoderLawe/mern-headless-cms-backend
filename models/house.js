@@ -22,6 +22,14 @@ const HouseSchema = new mongoose.Schema({
 
   guests:{
     type:Number
+  },
+  image:{
+    type:String,
+    required:false
+  },
+  images:{
+    type:Array,
+    required:false
   }
 });
 
