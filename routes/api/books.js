@@ -5,8 +5,9 @@ const router = express.Router();
 
 // Load Book model
 const Book = require("../../models/book");
+const url = "https://mern-cms-backend.adaptable.app/";
 
-router.get(("test", (req, res) => res.send("Test route is working")));
+router.get(url + "/test", (req, res) => res.send("Test route is working"));
 
 router.get("/", (req, res) => {
   Book.find()

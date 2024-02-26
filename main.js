@@ -18,7 +18,8 @@ const books = require("./routes/api/books");
 const posts = require("./routes/api/blogPosts");
 const menuItems = require("./routes/api/menuItems");
 const searchResults = require("./routes/api/searchResults");
-
+const houses = require("./routes/api/houses");
+const payments = require("./routes/api/payments");
 // Connect Database
 const connectDB = async () => {
   try {
@@ -42,7 +43,28 @@ app.get("/", (req, res) => res.send("Hello world!"));
 app.use("/api/books", books);
 app.use("/api/posts", posts);
 app.use("/api/items", menuItems);
-app.use("/api/searchResults", searchResults);
+// app.use("/api/payments", payments)
+// app.use("/api/searchResults", searchResults);
+
+app.use("/api/houses", houses)
+app.post("/payment", async (req, res)   => {
+  const {amount, id}  = req.body;
+  try {
+      const payment = await stripe.paymentIntents.create({amount, currency:"USD", description:"Spatula", payment_method:id, confirm:true,return_url:"http://localhost:3000"})
+      console.log("Payment", payment)
+      res.json({
+          message:"Payment Succesful",
+          success:true
+      })
+  } catch (error) {
+          console.log("error", error)
+          res.json({
+              message:"Payment Failed",
+              success:false
+          })
+  }
+})
+
 
 const port = process.env.PORT || 8082;
 

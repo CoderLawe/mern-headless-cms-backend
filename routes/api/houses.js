@@ -2,14 +2,14 @@ const express = require("express");
 const router = express.Router();
 // const multer = require("multer");
 
-const BlogPost = require("../../models/blogPost");
+const House = require("../../models/house");
 // let upload = multer({ storage, fileFilter });
 
 const url = "https://mern-cms-backend.adaptable.app/";
 router.get(url + "/test", (req, res) => res.send("Test route is working"));
 
 router.get("/", (req, res) => {
-  BlogPost.find()
+  House.find()
     .then((posts) => res.json(posts))
     .catch((err) =>
       res.status(404).json({ noPostsFound: "no posts were found" })
@@ -17,7 +17,7 @@ router.get("/", (req, res) => {
 });
 
 router.get("/:id", (req, res) => {
-  BlogPost.findById(req.params.id)
+  House.findById(req.params.id)
     .then((post) => res.json(post))
     .catch((err) => res.status(404).json({ nobookfound: "No Post found" }));
 });
@@ -26,10 +26,12 @@ router.get("/:id", (req, res) => {
 // @description add/save book
 // @access Public
 router.post("/", (req, res) => {
-  BlogPost.create(req.body)
-    .then((book) => res.json({ msg: "Post posted successfully" }))
-    .catch((err) =>
-      res.status(400).json({ error: "Unable to post this post" })
+  House.create(req.body)
+  .then((book) => res.json({ msg: "Book added successfully" }))
+  .catch((err) =>{
+      res.status(400).json({ error: "Unable to post this post" });
+      console.log("err", err)
+      }
     );
 });
 
@@ -37,7 +39,7 @@ router.post("/", (req, res) => {
 // @description Update book
 // @access Public
 router.put("/:id", (req, res) => {
-  BlogPost.findByIdAndUpdate(req.params.id, req.body)
+  House.findByIdAndUpdate(req.params.id, req.body)
     .then((book) => res.json({ msg: "Updated successfully" }))
     .catch((err) =>
       res.status(400).json({ error: "Unable to update the Database" })
@@ -48,7 +50,7 @@ router.put("/:id", (req, res) => {
 // @description Delete book by id
 // @access Public
 router.delete("/:id", (req, res) => {
-  BlogPost.findByIdAndRemove(req.params.id, req.body)
+  House.findByIdAndRemove(req.params.id, req.body)
     .then((book) => res.json({ mgs: "Post entry deleted successfully" }))
     .catch((err) => res.status(404).json({ error: "No such post" }));
 });

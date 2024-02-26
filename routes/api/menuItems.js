@@ -6,7 +6,7 @@ const MenuItem = require("../../models/menuItem");
 // let upload = multer({ storage, fileFilter });
 
 const url = "https://mern-cms-backend.adaptable.app/";
-router.get((url + "/test", (req, res) => res.send("Test route is working")));
+router.get(url + "/test", (req, res) => res.send("Test route is working"));
 
 router.get("/", (req, res) => {
   BlogPost.find()

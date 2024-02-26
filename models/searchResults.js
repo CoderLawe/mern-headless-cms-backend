@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const SearchResultsSchema = new mongoose.Schema({
+const SearchResultSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
@@ -35,4 +35,4 @@ total:{
 
 });
 
-module.exports = SearchResult = mongoose.model("searchResult", SearchResultsSchema);
+module.exports = SearchResult = mongoose.model("searchResult", SearchResultSchema);
