@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const OrderSchema = new mongoose.Schema({
+const HouseSchema = new mongoose.Schema({
   title: {
     type: String,
     required:false
