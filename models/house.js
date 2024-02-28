@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const HouseSchema = new mongoose.Schema({
+const OrderSchema = new mongoose.Schema({
   title: {
     type: String,
     required:false
@@ -28,6 +28,10 @@ const HouseSchema = new mongoose.Schema({
     required:false
   },
   images:{
+    type:Array,
+    required:false
+  },
+  orders:{
     type:Array,
     required:false
   }
