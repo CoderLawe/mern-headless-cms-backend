@@ -20,7 +20,7 @@ router.post('/stripe-webhook', async (req, res) => {
       const orderId = session.client_reference_id; // Order ID
       const amountPaid = session.amount_total; // Amount Paid
     //   const itemName = session.display_items[0].custom.name; // Item Name
-      const itemPrice = session.display_items[0].amount / 100; // Item Price (in dollars)
+    //   const itemPrice = session.display_items[0].amount / 100; // Item Price (in dollars)
 
       // Example: Log the retrieved customer and order details
       console.log('Checkout session completed:');
@@ -29,7 +29,7 @@ router.post('/stripe-webhook', async (req, res) => {
       console.log('Order ID:', orderId);
       console.log('Amount Paid:', amountPaid);
     //   console.log('Item Name:', itemName);
-      console.log('Item Price:', itemPrice);
+    //   console.log('Item Price:', itemPrice);
 
       // Now you can process this information as needed, such as updating your database
           // Find the house in the database based on the orderId or any other identifier
