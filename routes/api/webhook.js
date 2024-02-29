@@ -19,6 +19,9 @@ router.post('/stripe-webhook', async (req, res) => {
       const customerEmail = session.customer_email; // Customer Email
       const orderId = session.client_reference_id; // Order ID
       const amountPaid = session.amount_total; // Amount Paid
+      const startDate = session.metadata.startDate;
+      const endDate = session.metadata.endDate;
+      const nights = session.metadata.nights
     //   const itemName = session.display_items[0].custom.name; // Item Name
     //   const itemPrice = session.display_items[0].amount / 100; // Item Price (in dollars)
 
@@ -28,6 +31,10 @@ router.post('/stripe-webhook', async (req, res) => {
       console.log('Customer Email:', customerEmail);
       console.log('Order ID:', orderId);
       console.log('Amount Paid:', amountPaid);
+      console.log("startDate", startDate);
+      console.log("endDate", endDate)
+      console.log("nights", nights);
+
     //   console.log('Item Name:', itemName);
     //   console.log('Item Price:', itemPrice);
 
@@ -35,7 +42,7 @@ router.post('/stripe-webhook', async (req, res) => {
           // Find the house in the database based on the orderId or any other identifier
           const house = await House.findOneAndUpdate(
             { orderId }, // Update query
-            { $push: { orders: { customerId, customerEmail, amountPaid } } }, // Add the order details to the orders array
+            { $push: { orders: { customerId, customerEmail, amountPaid, startDate, endDate, nights } } }, // Add the order details to the orders array
             { new: true } // Return the updated document
           );
   
