@@ -43,7 +43,7 @@ app.get("/", (req, res) => res.send("Hello world!"));
 app.use("/api/books", books);
 app.use("/api/posts", posts);
 app.use("/api/items", menuItems);
-// app.use("/api/payments", payments)
+app.use("/api/payments", payments)
 // app.use("/api/searchResults", searchResults);
 
 app.use("/api/houses", houses)

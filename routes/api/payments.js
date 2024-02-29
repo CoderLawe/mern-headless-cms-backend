@@ -4,21 +4,30 @@ const router = express.Router();
 
 // let upload = multer({ storage, fileFilter });
 
-router.post("/payment", async (req, res)   => {
-    const {amount, id}  = req.body;
-    try {
-        const payment = await stripe.paymentIntents.create({amount, currency:"USD", description:"Spatula", payment_method:id, confirm:true,return_url:"http://localhost:3000"})
-        console.log("Payment", payment)
-        res.json({
-            message:"Payment Succesful",
-            success:true
-        })
-    } catch (error) {
-            console.log("error", error)
-            res.json({
-                message:"Payment Failed",
-                success:false
-            })
-    }
-})
 
+router.post('/create-checkout-session', async (req, res) => {
+    const { amount, description, success_url, cancel_url, imageUrl } = req.body;
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      line_items: [
+        {
+          price_data: {
+            currency: 'usd',
+            product_data: {
+              name: description,
+              images: [imageUrl], 
+
+            },
+            unit_amount: amount,
+          },
+          quantity: 1,
+        },
+      ],
+      mode: 'payment',
+      success_url:"http://localhost:3000/allhouses",
+      cancel_url,
+    });
+    res.json({ url: session.url });
+  });
+
+module.exports = router
