@@ -5,6 +5,7 @@ const router = express.Router();
 // let upload = multer({ storage, fileFilter });
 const stripe = require("stripe")(process.env.STRIPE_SECRET_TEST)
 
+// Env variable.
 
 router.post('/create-checkout-session', async (req, res) => {
     const { amount, description, success_url, cancel_url, imageUrl, houseId } = req.body;
