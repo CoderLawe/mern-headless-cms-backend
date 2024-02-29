@@ -3,10 +3,11 @@ const router = express.Router();
 // const multer = require("multer");
 
 // let upload = multer({ storage, fileFilter });
+const stripe = require("stripe")(process.env.STRIPE_SECRET_TEST)
 
 
 router.post('/create-checkout-session', async (req, res) => {
-    const { amount, description, success_url, cancel_url, imageUrl } = req.body;
+    const { amount, description, success_url, cancel_url, imageUrl, houseId } = req.body;
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: [
@@ -26,6 +27,8 @@ router.post('/create-checkout-session', async (req, res) => {
       mode: 'payment',
       success_url:"http://localhost:3000/allhouses",
       cancel_url,
+      client_reference_id: houseId, // Pass the houseId here
+
     });
     res.json({ url: session.url });
   });
