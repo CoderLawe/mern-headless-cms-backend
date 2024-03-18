@@ -1,5 +1,7 @@
 const express = require("express");
 const router = express.Router();
+const House = require("../../models/house");
+
 // const multer = require("multer");
 
 // let upload = multer({ storage, fileFilter });
@@ -36,7 +38,19 @@ router.post('/create-checkout-session', async (req, res) => {
       client_reference_id: houseId, // Pass the houseId here
 
     });
+    const house = await House.findOneAndUpdate(
+      { orderId }, // Update query
+      { $push: { orders: { customerId, customerEmail, amountPaid, startDate, endDate, nights } } }, // Add the order details to the orders array
+      { new: true } // Return the updated document
+    );
+
+    // Log the updated house document
+    console.log('Updated House:', house);
+    
+    // Respond with success status
+    res.sendStatus(200);
     res.json({ url: session.url });
+    console.log("session", session)
   });
 
 module.exports = router
