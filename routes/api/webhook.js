@@ -9,12 +9,14 @@ router.use(bodyParser.raw({ type: 'application/json' }));
 
 router.post('/stripe-webhook', async (req, res) => {
   const event = req.body;
+  console.log("Event....", event)
 
   // Handle the event based on its type
   switch (event.type) {
     case 'checkout.session.completed':
       // Extract relevant data from the event object
       const session = event.data.object;
+      console.log("Session", session)
       const customerId = session.customer; // Customer ID
       const customerEmail = session.customer_email; // Customer Email
       const orderId = session.client_reference_id; // Order ID
