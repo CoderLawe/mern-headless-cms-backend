@@ -6,41 +6,41 @@ const router = express.Router();
 const stripe = require("stripe")(process.env.STRIPE_SECRET_TEST)
 
 // Env variable.
-
 router.post('/create-checkout-session', async (req, res) => {
-    const { amount, description, success_url, cancel_url, imageUrl, houseId, startDate, endDate, nights } = req.body;
-    console.log(
-      "Request body", req.body
-    )
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
-      line_items: [
-        {
-          price_data: {
-            currency: 'usd',
-            product_data: {
-              name: description,
-              images: [imageUrl], 
-           
+  // Extract necessary details from the request body
+  const { amount, description, success_url, cancel_url, imageUrl, houseId, startDate, endDate, nights } = req.body;
 
-            },
-            unit_amount: amount,
+  // Create a Checkout Session with Stripe
+  const session = await stripe.checkout.sessions.create({
+    payment_method_types: ['card'],
+    line_items: [
+      {
+        price_data: {
+          currency: 'usd',
+          product_data: {
+            name: description,
+            images: [imageUrl], 
           },
-          quantity: 1,
+          unit_amount: amount,
         },
-      ],
-      metadata: {
-        startDate,
-        endDate,
-        nights
+        quantity: 1,
       },
-      mode: 'payment',
-      success_url:"http://localhost:3000/allhouses",
-      cancel_url,
-      client_reference_id: houseId, // Pass the houseId here
-
-    });
-    res.json({ url: session.url });
+    ],
+    mode: 'payment',
+    success_url, // Success URL
+    cancel_url, // Cancel URL
+    client_reference_id: houseId, // Pass the houseId here
+    metadata: {
+      startDate,
+      endDate,
+      nights
+    }
   });
+
+  // Respond with the session URL
+  res.json({ url: session.url });
+});
+
+module.exports = router;
 
 module.exports = router
