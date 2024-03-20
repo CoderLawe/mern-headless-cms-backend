@@ -9,6 +9,9 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_TEST)
 
 router.post('/create-checkout-session', async (req, res) => {
     const { amount, description, success_url, cancel_url, imageUrl, houseId, startDate, endDate, nights } = req.body;
+    console.log(
+      "Request body", req.body
+    )
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: [
@@ -18,11 +21,7 @@ router.post('/create-checkout-session', async (req, res) => {
             product_data: {
               name: description,
               images: [imageUrl], 
-              metadata: {
-                startDate,
-                endDate,
-                nights
-              }
+           
 
             },
             unit_amount: amount,
@@ -30,6 +29,11 @@ router.post('/create-checkout-session', async (req, res) => {
           quantity: 1,
         },
       ],
+      metadata: {
+        startDate,
+        endDate,
+        nights
+      },
       mode: 'payment',
       success_url:"http://localhost:3000/allhouses",
       cancel_url,
